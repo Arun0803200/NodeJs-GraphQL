@@ -1,0 +1,15 @@
+create:-
+---------
+{
+    "query": "mutation createEmployee($firstName: String!, $role: Float!) {createEmployee(firstName:$firstName, role:$role) {status message data {id firstName}}}",
+    "variables": {
+        "firstName": "Arundhika",
+        "role": 2
+    }
+}
+
+List:-
+------
+{
+  "query": "query {getEmployee(limit: 10, offset: 0, count: false) {status message data { id firstName role } } }"
+}
