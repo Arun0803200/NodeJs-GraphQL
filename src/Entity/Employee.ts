@@ -5,8 +5,7 @@ import { ObjectType, Field, Int } from "type-graphql";
 @Entity('tbl_employee')
 export class Employee {
     @Field(() => Int)
-    @PrimaryGeneratedColumn()
-    // @Column({name: 'id'})
+    @PrimaryGeneratedColumn({name: 'id'})
     public id: number;
 
     @Field()
