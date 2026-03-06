@@ -2,27 +2,32 @@ import { ApolloServer } from 'apollo-server-express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import express from 'express'; // Use import instead of require
-import { Employee } from './Entity/Employee';
-import { EmployeeResolver } from './Resolers/EmployeeResoler';
-import { createConnection } from 'typeorm';
-
+import { graphqlUploadExpress } from 'graphql-upload-ts'
+import { AppDataSource } from './Config/DataSource';
+import { UserResolver } from './Resolers/UserResolver';
+import { UploadResolver } from './Resolers/UploadResolver';
+import { AboutResolver } from './Resolers/AboutResolver';
 async function startServer() {
     const app = express();
 
-    await createConnection({
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '',
-        database: 'arundhika_graphql',
-        synchronize: true,
-        logging: true,
-        entities: [Employee],
-    });
+    // Middleware for handling file uploads
+    app.use(
+        graphqlUploadExpress({
+            maxFileSize: 10000000,
+            maxFiles: 5,
+        })
+    );
+
+    await AppDataSource.initialize()
+        .then(() => {
+            console.log("Database connected successfully");
+        })
+        .catch((error: any) => {
+            console.log("Database connection error:", error);
+        });
 
     const schema = await buildSchema({
-        resolvers: [EmployeeResolver],
+        resolvers: [UserResolver, UploadResolver, AboutResolver],
     });
 
     const server = new ApolloServer({ schema }); // Wrap schema in an object
