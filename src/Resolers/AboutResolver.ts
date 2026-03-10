@@ -27,7 +27,7 @@ export class AboutResolver {
             if (!findUser) {
                 return {
                     status: 0,
-                    message: 'UUID not found',
+                    message: 'UUID not found!',
                 };
             }
 
