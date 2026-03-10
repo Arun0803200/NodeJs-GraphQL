@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
 import { ObjectType, Field, Int } from "type-graphql";
 
 @ObjectType()
@@ -9,6 +9,7 @@ export class UserExperience {
     public id: number;
 
     @Field()
+    @Index('idx_user_experience_uuid')
     @Column({ name: 'user_uuid', type: 'uuid' })
     public userUuid: string;
 
@@ -28,13 +29,13 @@ export class UserExperience {
     @Column({ name: 'designation', type: 'varchar', length: '255' })
     public designation: string;
 
-    @Field()
-    @Column({ name: 'start_date', type: 'date' })
+    @Field(() => Date)
+    @Column({ name: 'start_date', type: 'timestamp', nullable: true })
     public startDate: Date;
 
-    @Field()
-    @Column({ name: 'end_date', type: 'date', default: null })
-    public endDate: Date;
+    @Field(() => Date, { nullable: true })
+    @Column({ name: 'end_date', type: 'timestamp', nullable: true })
+    public endDate?: Date;
 
     @Field()
     @Column({ name: 'is_currently_working', type: 'boolean', default: false })
@@ -44,7 +45,7 @@ export class UserExperience {
     @Column({ name: 'job_description', type: 'text' })
     public jobDescription: string;
 
-    @Field()
+    @Field(() => [String])
     @Column({ name: 'skills', type: 'jsonb' })
     public skills: string[];
 
