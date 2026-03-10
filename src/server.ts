@@ -7,6 +7,8 @@ import { AppDataSource } from './Config/DataSource';
 import { UserResolver } from './Resolers/UserResolver';
 import { UploadResolver } from './Resolers/UploadResolver';
 import { AboutResolver } from './Resolers/AboutResolver';
+import { UserExperienceResolver } from './Resolers/UserExperienceResolver';
+import {UserProjectResolver} from './Resolers/UserProjectResolver';
 async function startServer() {
     const app = express();
 
@@ -27,7 +29,13 @@ async function startServer() {
         });
 
     const schema = await buildSchema({
-        resolvers: [UserResolver, UploadResolver, AboutResolver],
+        resolvers: [
+            UserResolver,
+            UploadResolver,
+            AboutResolver,
+            UserExperienceResolver,
+            UserProjectResolver,
+        ],
     });
 
     const server = new ApolloServer({ schema }); // Wrap schema in an object

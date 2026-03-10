@@ -1,6 +1,8 @@
 import { InputType, Field, ObjectType, Int } from "type-graphql";
 import { About } from "../Entity/About";
 import { UserImages } from "../Entity/UserImages";
+import { UserExperience } from "../Entity/UserExperience";
+import { UserProjects } from "../Entity/UserProjects";
 // InputType for SocialMediaInput to be used in UserResolver
 @InputType()
 export class SocialMediaInput {
@@ -68,4 +70,40 @@ export class UserImagesResponse {
 
     @Field(() => [UserImages], { nullable: true })
     public data?: UserImages[] | null;
+}
+
+@ObjectType()
+export class UserExperienceResponse {
+    @Field(() => Int)
+    public status: number;
+
+    @Field()
+    public message: string;
+
+    @Field(() => UserExperience, { nullable: true })
+    public data?: UserExperience | null;
+}
+
+@ObjectType()
+export class UserExperienceListResponse {
+    @Field(() => Int)
+    public status: number;
+
+    @Field()
+    public message: string;
+
+    @Field(() => [UserExperience], { nullable: true })
+    public data?: UserExperience[] | null;
+}
+
+@ObjectType()
+export class UserProjectResponse {
+    @Field(() => Int)
+    public status: number;
+
+    @Field()
+    public message: string;
+
+    @Field(() => UserProjects, { nullable: true })
+    public data?: UserProjects | null;
 }
