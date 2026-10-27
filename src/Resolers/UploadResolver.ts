@@ -4,6 +4,7 @@ import { Upload } from "@aws-sdk/lib-storage"; // Use this for streams
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
 import { s3Client, BUCKET_NAME } from "../Config/S3Service";
+import { env } from "../Config/env";
 import { DeleteFileResponse, FileResponse } from "../Config/SettingsTypes";
 import { UserImages } from "../Entity/UserImages";
 import { User } from "../Entity/User";
@@ -66,7 +67,7 @@ export class UploadResolver {
 
       await parallelUploads3.done(); // totalSize is now fully accumulated
 
-      const imageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+      const imageUrl = `https://${BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
 
       const newUserImages = new UserImages();
       newUserImages.userUuid = uuid;

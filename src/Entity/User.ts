@@ -14,6 +14,11 @@ export class User {
     public fullName: string;
 
     @Field()
+    @Index('idx_unique_user_name', { unique: true })
+    @Column({ name: 'user_name', type: 'varchar', length: '50' })
+    public userName: string;
+
+    @Field()
     @Column({ name: 'designation', type: 'varchar', length: '255', nullable: false })
     public designation: string;
 
@@ -35,10 +40,11 @@ export class User {
     @Column({ name: 'email', type: 'varchar', length: '255' })
     public email: string;
 
-    @Field()
+    // Nullable so accounts created without a phone don't collide on the unique index
+    @Field(() => String, { nullable: true })
     @Index('idx_unique_user_mobile_no', { unique: true })
-    @Column({ name: 'mobile_no', type: 'varchar', length: '10' })
-    public mobileNo: string;
+    @Column({ name: 'mobile_no', type: 'varchar', length: '10', nullable: true })
+    public mobileNo: string | null;
 
     @Field()
     @Column({ name: 'address', type: 'varchar', length: '255' })

@@ -16,7 +16,7 @@ export class UserSkills {
     @Column({ name: 'tittle', type: 'varchar', length: '255' })
     public tittle: string;
 
-    @Field()
+    @Field(() => [String])
     @Column({ name: 'skills', type: 'jsonb' })
     public skills: string[];
 

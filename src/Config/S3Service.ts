@@ -1,19 +1,12 @@
 import { S3Client } from "@aws-sdk/client-s3";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-// Ensure these exist or the app will crash early with a clear message
-if (!process.env.AWS_REGION || !process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
-  throw new Error("Missing AWS Configuration in Environment Variables");
-}
+import { env } from "./env";
 
 export const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
+  region: env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY
   }
 });
 
-export const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME!;
+export const BUCKET_NAME = env.AWS_S3_BUCKET_NAME;

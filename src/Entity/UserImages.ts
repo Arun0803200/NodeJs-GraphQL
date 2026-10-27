@@ -38,6 +38,18 @@ export class UserImages {
     @Field()
     public imageUrl: string;
 
+    @Field(() => Int, { nullable: true })
+    @Column({ name: 'width', type: 'int', nullable: true })
+    public width: number | null;
+
+    @Field(() => Int, { nullable: true })
+    @Column({ name: 'height', type: 'int', nullable: true })
+    public height: number | null;
+
+    // Responsive variants: [{ width, url }]
+    @Column({ name: 'variants', type: 'jsonb', nullable: true })
+    public variants: { width: number; url: string }[] | null;
+
     @Field()
     @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     public createdAt: Date;
